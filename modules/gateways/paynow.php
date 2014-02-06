@@ -1,27 +1,22 @@
 <?php
 /*
- * Sage Pay Pay Now Module WHMCS Third Party Gateway
+ * Pay Now WHMCS Gateway Module
  */
 function paynow_config() {
 	$configarray = array (
 			"FriendlyName" => array (
 					"Type" => "System",
-					"Value" => "Pay Now" 
+					"Value" => "Pay Now (MasterCard/Visa)" 
 			),
 			"servicekey" => array (
 					"FriendlyName" => "Service Key",
 					"Type" => "text",
-					"Size" => "20" 
+					"Size" => "40" 
 			),
-			"softwarevendorkey" => array (
-					"FriendlyName" => "Software Vendor Key",
-					"Type" => "text",
-					"Size" => "20" 
-			),
-			"testmode" => array (
-					"FriendlyName" => "Test Mode",
+			"sendemailconfirm" => array (
+					"FriendlyName" => "Send email",
 					"Type" => "yesno",
-					"Description" => "Tick this to test" 
+					"Description" => "An email confirmation will be sent from the Pay Now gateway to the client after each transaction." 
 			) 
 	);
 	return $configarray;
@@ -29,98 +24,52 @@ function paynow_config() {
 function paynow_link($params) {
 	
 	// Gateway Specific Variables
-	$gatewayusername = $params ['username'];
-	$gatewaytestmode = $params ['testmode'];
+	$m1_PayNowServiceKey = $params ['servicekey'];
+	// Software vendor key is the hard coded for Pay Now Online web software requests
+	$m2_SoftwareVendorKey = "24ade73c-98cf-47b3-99be-cc7b867b3080";
 	
 	// Invoice Variables
+	$p2_UniqueRef = $params ['invoiceid'];
+	$p3_Description = $params ['description'];
+	$p4_Amount = $params ['amount'];
+	$Budget = "N";
+	
+	// Client details
+	$m4_Extra1 = $params ['clientdetails'] ['userid'];
+	$m5_Extra2 = $params ['clientdetails'] ['firstname'] . ' ' . $params ['clientdetails'] ['firstname'];
+	if ($params ['clientdetails'] ['companyname']) {
+		$m5_Extra2 = $m5_Extra2 . $params ['clientdetails'] ['companyname'];
+	}
+	$m6_Extra3 = $params ['clientdetails'] ['phonenumber'];
+	
+	if ($params ['sendemailconfirm'] == 'on') {
+		$m9_CardHolder = $params ['clientdetails'] ['email'];
+	}
+	
+	$m10_ReturnText = "GatewayReturned";
+	
 	$invoiceid = $params ['invoiceid'];
 	$description = $params ["description"];
-	$amount = $params ['amount']; // Format: ##.##
-	$currency = $params ['currency']; // Currency Code
-	                                 
-	// Client Variables
-	$firstname = $params ['clientdetails'] ['firstname'];
-	$lastname = $params ['clientdetails'] ['lastname'];
-	$email = $params ['clientdetails'] ['email'];
-	$address1 = $params ['clientdetails'] ['address1'];
-	$address2 = $params ['clientdetails'] ['address2'];
-	$city = $params ['clientdetails'] ['city'];
-	$state = $params ['clientdetails'] ['state'];
-	$postcode = $params ['clientdetails'] ['postcode'];
-	$country = $params ['clientdetails'] ['country'];
-	$phone = $params ['clientdetails'] ['phonenumber'];
-	
-	// System Variables
-	$companyname = $params ['companyname'];
-	$systemurl = $params ['systemurl'];
+	$amount = $params ['amount'];
 	$currency = $params ['currency'];
 	
-	// Enter your code submit to the gateway...
-	
-	$code = '<form method="http://www.domain.com/submit">
-<input type="hidden" name="username" value="' . $gatewayusername . '" />
-<input type="hidden" name="testmode" value="' . $gatewaytestmode . '" />
-<input type="hidden" name="description" value="' . $description . '" />
-<input type="hidden" name="invoiceid" value="' . $invoiceid . '" />
-<input type="hidden" name="amount" value="' . $amount . '" />
-<input type="submit" value="Pay Now" />
+	// Gateway submit code
+	$code = '<form action="https://paynow.sagepay.co.za/site/paynow.aspx" method="post">
+				<input type="hidden" name="m1" value="' . $m1_PayNowServiceKey . '" />
+				<input type="hidden" name="m2" value="' . $m2_SoftwareVendorKey . '" />
+				<input type="hidden" name="p2" value="' . $p2_UniqueRef . '" />
+				<input type="hidden" name="p3" value="' . $p3_Description . '" />
+				<input type="hidden" name="p4" value="' . $p4_Amount . '" />
+				<input type="hidden" name="Budget" value="' . $Budget . '" />
+				<input type="hidden" name="m4" value="' . $m4_Extra1 . '" />
+				<input type="hidden" name="m5" value="' . $m5_Extra2 . '" />
+				<input type="hidden" name="m6" value="' . $m6_Extra3 . '" />
+				<input type="hidden" name="m9" value="' . $m9_CardHolder . '" />
+				<input type="hidden" name="m10" value="' . $m10_ReturnText . '" />
+<input type="submit" value="Pay" />
 </form>';
 	
 	return $code;
-}
-function paynow_refund($params) {
-	
-	// Gateway Specific Variables
-	$gatewayusername = $params ['username'];
-	$gatewaytestmode = $params ['testmode'];
-	
-	// Invoice Variables
-	$transid = $params ['transid']; // Transaction ID of Original Payment
-	$amount = $params ['amount']; // Format: ##.##
-	$currency = $params ['currency']; // Currency Code
-	                                 
-	// Client Variables
-	$firstname = $params ['clientdetails'] ['firstname'];
-	$lastname = $params ['clientdetails'] ['lastname'];
-	$email = $params ['clientdetails'] ['email'];
-	$address1 = $params ['clientdetails'] ['address1'];
-	$address2 = $params ['clientdetails'] ['address2'];
-	$city = $params ['clientdetails'] ['city'];
-	$state = $params ['clientdetails'] ['state'];
-	$postcode = $params ['clientdetails'] ['postcode'];
-	$country = $params ['clientdetails'] ['country'];
-	$phone = $params ['clientdetails'] ['phonenumber'];
-	
-	// Card Details
-	$cardtype = $params ['cardtype'];
-	$cardnumber = $params ['cardnum'];
-	$cardexpiry = $params ['cardexp']; // Format: MMYY
-	$cardstart = $params ['cardstart']; // Format: MMYY
-	$cardissuenum = $params ['cardissuenum'];
-	
-	// Perform Refund Here & Generate $results Array, eg:
-	$results = array ();
-	$results ["status"] = "success";
-	$results ["transid"] = "12345";
-	
-	// Return Results
-	if ($results ["status"] == "success") {
-		return array (
-				"status" => "success",
-				"transid" => $results ["transid"],
-				"rawdata" => $results 
-		);
-	} elseif ($gatewayresult == "declined") {
-		return array (
-				"status" => "declined",
-				"rawdata" => $results 
-		);
-	} else {
-		return array (
-				"status" => "error",
-				"rawdata" => $results 
-		);
-	}
 }
 
 ?>
