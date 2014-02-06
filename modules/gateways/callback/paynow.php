@@ -26,9 +26,13 @@ if ($status=="true") {
     # Successful
     addInvoicePayment($invoiceid,$transid,$amount,$fee,$gatewaymodule); # Apply Payment to Invoice: invoiceid, transactionid, amount paid, fees, modulename
 	logTransaction($GATEWAY["name"],$_POST,"Successful"); # Save to Gateway Log: name, data array, status
+	echo "Payment was successful";
 } else {
 	# Unsuccessful
     logTransaction($GATEWAY["name"],$_POST,"Unsuccessful"); # Save to Gateway Log: name, data array, status
+    echo "Payment was declined. Reason: " . $_POST['Reason'];
 }
+
+echo "<br><br><a href='../../../cart.php'>Click here</a> to return.";
 
 ?>
