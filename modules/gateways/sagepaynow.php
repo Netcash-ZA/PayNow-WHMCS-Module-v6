@@ -2,11 +2,11 @@
 /*
  * Pay Now WHMCS Gateway Module
  */
-function paynow_config() {
+function sagepaynow_config() {
 	$configarray = array (
 			"FriendlyName" => array (
 					"Type" => "System",
-					"Value" => "MasterCard/Visa" 
+					"Value" => "Sage Pay Now" 
 			),
 			"servicekey" => array (
 					"FriendlyName" => "Service Key",
@@ -21,7 +21,7 @@ function paynow_config() {
 	);
 	return $configarray;
 }
-function paynow_link($params) {
+function sagepaynow_link($params) {
 	
 	// Gateway Specific Variables
 	$m1_PayNowServiceKey = $params ['servicekey'];
