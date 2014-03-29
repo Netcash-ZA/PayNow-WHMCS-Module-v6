@@ -6,7 +6,7 @@ function paynow_config() {
 	$configarray = array (
 			"FriendlyName" => array (
 					"Type" => "System",
-					"Value" => "Pay Now (MasterCard/Visa)" 
+					"Value" => "MasterCard/Visa" 
 			),
 			"servicekey" => array (
 					"FriendlyName" => "Service Key",
@@ -54,6 +54,7 @@ function paynow_link($params) {
 	$currency = $params ['currency'];
 	
 	// Gateway submit code
+	// Refer to documentation
 	$code = '<form action="https://paynow.sagepay.co.za/site/paynow.aspx" method="post">
 				<input type="hidden" name="m1" value="' . $m1_PayNowServiceKey . '" />
 				<input type="hidden" name="m2" value="' . $m2_SoftwareVendorKey . '" />
