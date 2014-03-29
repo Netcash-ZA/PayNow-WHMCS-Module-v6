@@ -14,14 +14,14 @@ Download the files from here:
 
 Copy the following two files:
 
-* https://github.com/SagePay/PayNow-WHMCS/blob/master/modules/gateways/paynow.php
-* https://github.com/SagePay/PayNow-WHMCS/blob/master/modules/gateways/callback/paynow.php
+* https://github.com/SagePay/PayNow-WHMCS/blob/master/modules/gateways/sagepaynow.php
+* https://github.com/SagePay/PayNow-WHMCS/blob/master/modules/gateways/callback/sagepaynow.php
 
 
 to
 
-* /WHMCS_Installation/modules/gateways/paynow.php
-* /WHMCS_Installation/modules/gateways/callback/paynow.php
+* /WHMCS_Installation/modules/gateways/sagepaynow.php
+* /WHMCS_Installation/modules/gateways/callback/sagepaynow.php
 
 Configuration
 -------------
