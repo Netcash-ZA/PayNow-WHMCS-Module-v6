@@ -29,7 +29,7 @@ function paynow_link($params) {
 	$m2_SoftwareVendorKey = "24ade73c-98cf-47b3-99be-cc7b867b3080";
 	
 	// Invoice Variables
-	$p2_UniqueRef = $params ['invoiceid'];
+	$p2_UniqueRef = sprintf("%d-%d", $params ['invoiceid'], date("U"));
 	$p3_Description = $params ['description'];
 	$p4_Amount = $params ['amount'];
 	$Budget = "N";
