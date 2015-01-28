@@ -26,13 +26,23 @@ if ($status=="true") {
     # Successful
     addInvoicePayment($invoiceid,$transid,$amount,$fee,$gatewaymodule); # Apply Payment to Invoice: invoiceid, transactionid, amount paid, fees, modulename
 	logTransaction($GATEWAY["name"],$_POST,"Successful"); # Save to Gateway Log: name, data array, status
-	echo "Payment was successful.";
+	echo "<p>Payment was successful.</p>";
+	echo "<p>You will be redirected to the client area in 5 seconds. <a href='../../../clientarea.php'>Click here</a> to return immediately.</p>";
+	?>
+
+	<script type="text/javascript">
+		setTimeout(function () {
+	       window.location.href = "../../../clientarea.php";
+	    }, 5000);
+	</script>
+	<?php
 } else {
 	# Unsuccessful
     logTransaction($GATEWAY["name"],$_POST,"Unsuccessful"); # Save to Gateway Log: name, data array, status
-    echo "Payment was declined. Reason: " . $_POST['Reason'];
+    echo "<p>Payment was declined. Reason: " . $_POST['Reason'] . "</p>";
+    echo "<p><a href='../../../cart.php'>Click here</a> to return to the cart.</p>";
 }
 
-echo "<br><br><a href='../../../cart.php'>Click here</a> to return to the cart.";
+
 
 ?>
