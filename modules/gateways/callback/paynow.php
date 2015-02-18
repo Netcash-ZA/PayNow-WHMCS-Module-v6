@@ -13,10 +13,16 @@ if (!$GATEWAY["type"]) die("Module Not Activated"); # Checks gateway module is a
 
 # Get Returned Variables - Adjust for Post Variable Names from your Gateway's Documentation
 $status = $_POST["TransactionAccepted"];
-$invoiceid = $_POST["Reference"];
+
+// Reference is sent as p2
+$matches = array();
+preg_match('/(\d{1,4})-/', $_POST["Reference"], $matches);
+
+$invoiceid = $matches[1];
 $transid = $_POST["RequestTrace"];
 $amount = $_POST["Amount"];
 $fee = "";
+$adminuser = $GATEWAY['whmcs_admin_username'];
 
 $invoiceid = checkCbInvoiceID($invoiceid,$GATEWAY["name"]); # Checks invoice ID is a valid invoice number or ends processing
 
@@ -24,18 +30,30 @@ checkCbTransID($transid); # Checks transaction number isn't already in the datab
 
 if ($status=="true") {
     # Successful
-    addInvoicePayment($invoiceid,$transid,$amount,$fee,$gatewaymodule); # Apply Payment to Invoice: invoiceid, transactionid, amount paid, fees, modulename
-	logTransaction($GATEWAY["name"],$_POST,"Successful"); # Save to Gateway Log: name, data array, status
-	echo "<p>Payment was successful.</p>";
-	echo "<p>You will be redirected to the client area in 5 seconds. <a href='../../../clientarea.php'>Click here</a> to return immediately.</p>";
-	?>
+    // addInvoicePayment($invoiceid, $transid, $amount, $fee, $gatewaymodule); # Apply Payment to Invoice: invoiceid, transactionid, amount paid, fees, modulename
+    $command = "addinvoicepayment";
+    $values = array();
+    $values["invoiceid"] = $invoiceid;
+    $values["transid"] = $transid;
+    $values["amount"] = $amount;
+    $values["fee"] = $fee;
+    $values["gateway"] = $GATEWAY['name'];
+    $values["date"] = $GATEWAY['name'];
+    $results = localAPI($command,$values,$adminuser);
 
-	<script type="text/javascript">
-		setTimeout(function () {
-	       window.location.href = "../../../clientarea.php";
-	    }, 5000);
-	</script>
-	<?php
+
+    logTransaction($GATEWAY["name"],$_POST,"Successful"); # Save to Gateway Log: name, data array, status
+
+    echo "<p>Payment was successful.</p>";
+    echo "<p>You will be redirected to the client area in 5 seconds. <a href='../../../clientarea.php'>Click here</a> to return immediately.</p>";
+    ?>
+
+    <script type="text/javascript">
+        setTimeout(function () {
+           window.location.href = "../../../clientarea.php";
+        }, 5000);
+    </script>
+    <?php
 } else {
 	# Unsuccessful
     logTransaction($GATEWAY["name"],$_POST,"Unsuccessful"); # Save to Gateway Log: name, data array, status

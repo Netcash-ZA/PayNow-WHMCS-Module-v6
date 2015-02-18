@@ -13,6 +13,12 @@ function paynow_config() {
 					"Type" => "text",
 					"Size" => "40" 
 			),
+            "whmcs_admin_username" => array (
+                "FriendlyName" => "WHMCS Admin User Name",
+                "Type" => "text",
+                "Size" => "20",
+                "Description" => "Need an admin user name to use the local API, usually it's just 'admin'.",
+            ),
 			"sendemailconfirm" => array (
 					"FriendlyName" => "Send email",
 					"Type" => "yesno",
