@@ -13,7 +13,7 @@ function paynow_config() {
 					"Type" => "text",
 					"Size" => "40"
 			),
-            "whmcs_admin_username" => array (
+            "api_user" => array (
                 "FriendlyName" => "WHMCS Admin User Name",
                 "Type" => "text",
                 "Size" => "20",

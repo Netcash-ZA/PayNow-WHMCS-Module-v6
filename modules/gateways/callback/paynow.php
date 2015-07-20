@@ -62,7 +62,7 @@ $invoiceid = $matches[1];
 $transid = $_POST["RequestTrace"];
 $amount = $_POST["Amount"];
 $fee = "";
-$adminuser = $GATEWAY['whmcs_admin_username'];
+$adminuser = $GATEWAY['api_user'];
 
 $invoiceid = checkCbInvoiceID($invoiceid,$GATEWAY["name"]); # Checks invoice ID is a valid invoice number or ends processing
 
