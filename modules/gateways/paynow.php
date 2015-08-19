@@ -54,10 +54,15 @@ function paynow_link($params) {
 
 	$m10_ReturnText = "GatewayReturned";
 
-	$invoiceid = $params ['invoiceid'];
+	// $invoiceid = $params ['invoiceid'];
 	$description = $params ["description"];
 	$amount = $params ['amount'];
 	$currency = $params ['currency'];
+
+	$customerName = "{$params['clientdetails']['firstname']} {$params['clientdetails']['lastname']}";
+	$orderID = $invoiceid;
+	$customerID = $params ['clientdetails']['userid'];
+	$sageGUID = "TBC";
 
 	// Gateway submit code
 	// Refer to documentation
@@ -65,10 +70,13 @@ function paynow_link($params) {
 				<input type="hidden" name="m1" value="' . $m1_PayNowServiceKey . '" />
 				<input type="hidden" name="m2" value="' . $m2_SoftwareVendorKey . '" />
 				<input type="hidden" name="p2" value="' . $p2_UniqueRef . '" />
-				<input type="hidden" name="p3" value="' . $p3_Description . '" />
+
+				<input type="hidden" name="p3" value="' . "{$customerName} | {$orderID}" . '" />
+				<input type="hidden" name="m3" value="' . $sageGUID . '" />
+				<input type="hidden" name="m4" value="' . $customerID . '" />
+
 				<input type="hidden" name="p4" value="' . $p4_Amount . '" />
 				<input type="hidden" name="Budget" value="' . $Budget . '" />
-				<input type="hidden" name="m4" value="' . $m4_Extra1 . '" />
 				<input type="hidden" name="m5" value="' . $m5_Extra2 . '" />
 				<input type="hidden" name="m6" value="' . $m6_Extra3 . '" />
 				<input type="hidden" name="m9" value="' . $m9_CardHolder . '" />
