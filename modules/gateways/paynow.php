@@ -59,13 +59,22 @@ function paynow_link($params) {
 	$amount = $params ['amount'];
 	$currency = $params ['currency'];
 
+	$customerName = "{$params['clientdetails']['firstname']} {$params['clientdetails']['lastname']}";
+	$orderID = $invoiceid;
+	$customerID = $params ['clientdetails']['userid'];
+	$sageGUID = "d783602-0f3c-4a19-9649-e2972cbb9eb6";
+
 	// Gateway submit code
 	// Refer to documentation
 	$code = '<form action="https://paynow.sagepay.co.za/site/paynow.aspx" method="post">
 				<input type="hidden" name="m1" value="' . $m1_PayNowServiceKey . '" />
 				<input type="hidden" name="m2" value="' . $m2_SoftwareVendorKey . '" />
 				<input type="hidden" name="p2" value="' . $p2_UniqueRef . '" />
-				<input type="hidden" name="p3" value="' . $p3_Description . '" />
+
+				<input type="hidden" name="p3" value="' . "{$customerName} | {$orderID}" . '" />
+				<input type="hidden" name="m3" value="' . $sageGUID . '" />
+				<input type="hidden" name="m4" value="' . $customerID . '" />
+
 				<input type="hidden" name="p4" value="' . $p4_Amount . '" />
 				<input type="hidden" name="Budget" value="' . $Budget . '" />
 				<input type="hidden" name="m4" value="' . $m4_Extra1 . '" />
