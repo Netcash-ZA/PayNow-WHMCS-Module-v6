@@ -72,7 +72,7 @@ function pn_do_transaction() {
 
     // Reference is sent as p2
     $matches = array();
-    preg_match('/(\d{1,4})-/', $_POST["Reference"], $matches);
+    preg_match('/(\d{1,8})-/', $_POST["Reference"], $matches);
 
     $invoiceid = $matches[1];
     $transid = $_POST["RequestTrace"];
