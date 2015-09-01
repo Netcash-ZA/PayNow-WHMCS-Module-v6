@@ -85,12 +85,12 @@ function pn_do_transaction() {
     pnLog( 'Invoice Id: '. print_r( $invoiceid, true ));
     pnLog( 'Status: '. print_r( $status, true ) . ' - ' .  gettype($status) );
 
-    checkCbTransID($transid); # Checks transaction number isn't already in the database and ends processing if it does
-    pnLog( 'checkCbTransID Called' );
-
     if ($status=="true") {
         # Successful
         pnLog( 'Transaction Successful' );
+
+        checkCbTransID($transid); # Checks transaction number isn't already in the database and ends processing if it does
+        pnLog( 'checkCbTransID Called' );
 
         // addInvoicePayment($invoiceid, $transid, $amount, $fee, $gatewaymodule); # Apply Payment to Invoice: invoiceid, transactionid, amount paid, fees, modulename
         $command = "addinvoicepayment";
