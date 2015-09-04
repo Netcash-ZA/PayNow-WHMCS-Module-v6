@@ -100,7 +100,7 @@ function pn_do_transaction() {
         $values["amount"] = $amount;
         $values["fee"] = $fee;
         $values["gateway"] = $GATEWAY['name'];
-        $values["date"] = $GATEWAY['name'];
+        $values["date"] = date('Ymd');
         $results = localAPI($command,$values,$adminuser);
 
         pnLog( 'addinvoicepayment Result: '. print_r( $results, true ) );
