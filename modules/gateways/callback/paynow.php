@@ -43,6 +43,7 @@ function pnLog( $msg = '', $close = false ) {
 }
 
 function pn_redirect() {
+    pnLog( 'pn_redirect called.' );
     echo "<p>We're awaiting the status of your payment.</p>";
     echo "<p>You will be redirected to the client area in 5 seconds. <a href='../../../clientarea.php'>Click here</a> to return immediately.</p>";
     ?>
@@ -141,15 +142,9 @@ if( isset($_POST) && !empty($_POST) ) {
 
 } else {
     // Probably calling the "redirect" URL
-
     pnlog(__FILE__ . ' Probably calling the "redirect" URL');
-
-    if( $url_for_redirect ) {
-        pn_redirect();
-        // header ( "Location: {$url_for_redirect}" );
-    } else {
-        die( "No 'redirect' URL set." );
-    }
+    pn_redirect();
+    die();
 }
 
 die( PN_ERR_BAD_ACCESS );
