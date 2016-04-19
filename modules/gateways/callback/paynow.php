@@ -90,6 +90,20 @@ function pn_do_transaction() {
         # Successful
         pnLog( 'Transaction Successful' );
 
+        echo "<p>Payment was successful.</p>";
+        echo "<p>You will be redirected to the client area in 5 seconds. <a href='../../../clientarea.php'>Click here</a> to return immediately.</p>";
+        ?>
+
+        <script type="text/javascript">
+            setTimeout(function () {
+               window.location.href = "../../../clientarea.php";
+            }, 5000);
+        </script>
+        <?php
+        pnLog( 'Returning to clientarea...' );
+
+        # checkCbTransID will halt execution, so let's just return visitor to clientarea above.
+
         checkCbTransID($transid); # Checks transaction number isn't already in the database and ends processing if it does
         pnLog( 'checkCbTransID Called' );
 
@@ -108,17 +122,6 @@ function pn_do_transaction() {
 
         logTransaction($GATEWAY["name"],$_POST,"Successful"); # Save to Gateway Log: name, data array, status
 
-        echo "<p>Payment was successful.</p>";
-        echo "<p>You will be redirected to the client area in 5 seconds. <a href='../../../clientarea.php'>Click here</a> to return immediately.</p>";
-        ?>
-
-        <script type="text/javascript">
-            setTimeout(function () {
-               window.location.href = "../../../clientarea.php";
-            }, 5000);
-        </script>
-        <?php
-        pnLog( 'Returning to clientarea.' );
     } else {
         # Unsuccessful
         pnLog( 'Transaction Unsuccessful' );
