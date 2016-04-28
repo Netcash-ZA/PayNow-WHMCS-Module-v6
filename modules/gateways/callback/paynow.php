@@ -62,11 +62,11 @@ function pn_do_transaction() {
     pnLog( 'Callback Received: '. print_r( $_POST, true ) );
 
     $gatewaymodule = "paynow"; # Enter your gateway module name here replacing template
-
     $GATEWAY = getGatewayVariables($gatewaymodule);
-    if (!$GATEWAY["type"]) die("Module Not Activated"); # Checks gateway module is active before accepting callback
 
     pnLog( 'GATEWAY: '. print_r( $GATEWAY, true ) );
+
+    if (!$GATEWAY["type"]) die("Module Not Activated"); # Checks gateway module is active before accepting callback
 
     # Get Returned Variables - Adjust for Post Variable Names from your Gateway's Documentation
     $status = $_POST["TransactionAccepted"];
