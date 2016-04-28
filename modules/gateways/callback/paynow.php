@@ -7,7 +7,7 @@ include("../../../includes/gatewayfunctions.php");
 include("../../../includes/invoicefunctions.php");
 
 # Set to true to enable logging
-define('PN_DEBUG', false);
+define('PN_DEBUG', true);
 
 /**
  * pnlog
