@@ -114,7 +114,7 @@ function pn_do_transaction() {
         $values["transid"] = $transid;
         $values["amount"] = $amount;
         $values["fee"] = $fee;
-        $values["gateway"] = $GATEWAY['name'];
+        $values["gateway"] = $gatewaymodule; //$GATEWAY['name'];
         $values["date"] = date('Y-m-d H:i:s');
         $results = localAPI($command,$values,$adminuser);
 
