@@ -76,7 +76,7 @@ function pn_do_transaction() {
     preg_match('/(\d{1,8})-/', $_POST["Reference"], $matches);
 
     $invoiceid = $matches[1];
-    $transid = $_POST["RequestTrace"];
+    $transid = $_POST["Reference"];
     $amount = $_POST["Amount"];
     $fee = "";
     $adminuser = $GATEWAY['api_user'];
