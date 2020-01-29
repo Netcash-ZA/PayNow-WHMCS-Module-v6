@@ -1,4 +1,4 @@
-Sage Pay Now WHMCS Credit Card Gateway Module
+Netcash Pay Now WHMCS Credit Card Gateway Module
 =============================================
 
 Revision 2.0.0
@@ -6,13 +6,10 @@ Revision 2.0.0
 Introduction
 ------------
 
-A third party credit card gateway integration that works with Sage Pay South Africa's Pay Now product.
+A third party credit card gateway integration that works with Netcash South Africa's Pay Now product.
 
 Installation Instructions
 -------------------------
-
-Download the files from here:
-* https://github.com/SagePay/PayNow-WHMCS/archive/master.zip
 
 Copy the following two files from the archive:
 
@@ -29,13 +26,13 @@ Configuration
 
 Prerequisites:
 
-* Sage Pay Now login credentials
-* Sage Pay Now Service Key
+* Netcash login credentials
+* Netcash Pay Now Service Key
 * WHMCS login credentials
 
 A. Pay Now Gateway Server Configuration Steps
 
-1. Log into your Pay Now Gateway Server configuration page
+1. Log into your Netcash account
 2. Choose the following for your accept, decline and notify URLs:
    http://whmcs_installation/modules/gateways/callback/paynow.php
 3. Choose the following for your redirect URL:
@@ -54,13 +51,13 @@ B. WHMCS Steps:
 
 You are now ready to transact. Remember to turn off "Make test mode active:" when you are ready to go live.
 
-Here is a screenshot of what the WHMCS settings screen for the Sage Pay Now configuration:
+Here is a screenshot of what the WHMCS settings screen for the Netcash Pay Now configuration:
 ![alt tag](http://196.201.6.235/whmcs/whmcs_screenshot1.png)
 
 Demo Site
 ---------
 
-There is a demo site if you want to see WHMCS and the Sage Pay Now gateway in action:
+There is a demo site if you want to see WHMCS and the Netcash Pay Now gateway in action:
 http://196.201.6.235/whmcs
 
 Revision History
@@ -89,4 +86,4 @@ Feedback, issues, comments, suggestions
 
 We welcome your feedback.
 
-If you have any comments or questions please contact Sage Pay South Africa or log the issue on GitHub.
+If you have any comments or questions please contact Netcash South Africa or log the issue on GitHub.
